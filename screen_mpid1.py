@@ -12,7 +12,7 @@ maxdisps = None	# 3    # stop running job if certain number of disp-*abo are com
 maxjobs = 5    # max number of jobs to submit at one time. 
 screen='_'
 other_screens = ['X']
-generate_scripts=True
+generate_scripts=False
 jobdir_run = jobdir2
 all_jobdirs = [jobdir2]  #, jobdir2]
 # the mpids which has already run in ryotaro's account. We exclude these from job lists. 
