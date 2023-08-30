@@ -255,11 +255,10 @@ class material:
 
 	def gen_job_scripts(self,N,n,P,screen=None):
 		# The slurm job name
-		# self.jobid = self.id+'_'+self.subid
 		if screen is not None:
 			self.jobid = self.id + screen
 		else: 
-			self.jobid = self.id# +'_'+self.subid	#!
+			self.jobid = self.id# +'_'+self.subid
 		# Go to work directory 
 		os.chdir(self.workdir)
 		# The job should be monitored such that when old

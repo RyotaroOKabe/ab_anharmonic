@@ -45,7 +45,6 @@ def need_action(mpid, jobdir, maxdisps):    # check if the $maxdisps files of di
         idx = int(dfile[-9:-4])
         if abo_done(workdir, idx): # if disp-$idx.abo is completed
             score += 1
-    # print('[score, spcells] = ', [score, len(spcells)])
     if maxdisps is not None:
         return score<maxdisps
     else: 
@@ -55,7 +54,7 @@ def job_in_squeue(screen):
     cmd = os.path.expandvars("squeue -u $USER")
     piper = sp.Popen(cmd, stdout = sp.PIPE, stderr = sp.PIPE, shell = True)
     STAT_CODE = [ "PD","R","CG"]
-    STAT_DESC = [ "pending","running","complet" ]
+    STAT_DESC = [ "pending","running","complet" ]   # no need?
     ## slurp off header line
     jobs = iter(piper.stdout.readline, "")
     _ = next(jobs)
