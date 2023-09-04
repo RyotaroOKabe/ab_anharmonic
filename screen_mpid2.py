@@ -18,8 +18,11 @@ all_jobdirs = [jobdir, jobdir2]
 skips = []
 
 # prepare mpids to run
-with open(mpids_file, 'r') as f:
-    mpids = f.readlines()
+mpids = []
+for mpids_f in mpids_files:
+    with open(os.path.join(mpids_dir, mpids_f), 'r') as f:
+        _mpids = f.readlines()
+    mpids += _mpids
 mpids = sorted([int(mpid[:-1]) for mpid in mpids])
 print(mpids)
 print('mpid: ', len(mpids))

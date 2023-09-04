@@ -1,4 +1,6 @@
+#%%
 from utils.screen import *
+from utils.tdep import *
 from dirs import *
 
 subid = '1'
@@ -12,11 +14,12 @@ maxdisps = None	# 3    # stop running job if certain number of disp-*abo are com
 maxjobs = 5    # max number of jobs to submit at one time. 
 screen='_'
 other_screens = ['X']
-generate_scripts=False
+run_phohno3py=False
+run_tdep_init=True
 jobdir_run = jobdir2
 all_jobdirs = [jobdir2]  #, jobdir2]
 # the mpids which has already run in ryotaro's account. We exclude these from job lists. 
-skips = [22895, 22913]
+skips = []
 
 # prepare mpids to run
 mpids = []
@@ -24,6 +27,8 @@ for mpids_f in mpids_files:
     with open(os.path.join(mpids_dir, mpids_f), 'r') as f:
         _mpids = f.readlines()
     mpids += _mpids
+
+#%%
 mpids = sorted([int(mpid[:-1]) for mpid in mpids])
 print(mpids)
 print('mpid: ', len(mpids))
@@ -32,6 +37,11 @@ mpids = [mpid for mpid in mpids if int(mpid) not in skips]
 print(mpids)
 print('mpid: ', len(mpids))
 
-if generate_scripts:
+if run_phohno3py:
     get_scripts(mpids,subid,nomaddir,jobdir_run,psdir,ndim,N,n,queue,screen=screen,njob=1,cluster=cluster)
+if run_tdep_init:
+    use_tdep_all()
+    
 screen_mpids(mpids, maxdisps, maxjobs, skips, jobdir_run, logs_dir, screen, queue, other_screens, all_jobdirs)
+
+#%%
