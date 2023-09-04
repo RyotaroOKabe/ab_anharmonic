@@ -38,6 +38,6 @@ def tdep_complete_cells(mpid, n_td, dims, temp, max_freq, jobdir, stdep=False):
 
 def tdep_cells_all(mpids, r_ss, dims, temp, max_freq, jobdir, stdep=False):
     for mpid in mpids:
-        n_p3 = count_files(jobdir, 'supercell-')
+        n_p3 = count_files(join(jobdir, 'phono3py'), 'supercell-')
         n_td = int(n_p3 * r_ss)
         tdep_complete_cells(mpid, n_td, dims, temp, max_freq, jobdir, stdep)
