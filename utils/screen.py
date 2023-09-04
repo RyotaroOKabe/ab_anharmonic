@@ -2,6 +2,7 @@ from utils.material import material
 from utils.job_manage import managing_job
 from utils.read_abo import abo_done
 import os
+from os.path import join
 import glob
 import subprocess as sp
 from collections import defaultdict
@@ -20,14 +21,14 @@ def get_median(test_list):
     return median
 
 def list_directories(path):
-    directories = [d for d in os.listdir(path) if os.path.isdir(os.path.join(path, d))]
+    directories = [d for d in os.listdir(path) if os.path.isdir(join(path, d))]
     return directories
 
 def completed_jobs(jobdir):
     jfolders = list_directories(jobdir)
     completed = []
     for jfolder in jfolders:
-        jdir = os.path.join(jobdir, jfolder)
+        jdir = join(jobdir, jfolder)
         nspcells = len(sorted([f for f in os.listdir(jdir) if f.startswith('supercell-') and f.endswith('.in') and len(f)==18]))
         ndisps = len(sorted([f for f in os.listdir(jdir) if f.startswith('disp-') and f.endswith('.abo')]))
         if ndisps >= nspcells:
@@ -35,11 +36,11 @@ def completed_jobs(jobdir):
     return completed
 
 def need_action(mpid, jobdir, maxdisps):    # check if the $maxdisps files of disp-*.abo are completed in one workdir
-    workdir = os.path.join(jobdir,str(mpid))
+    workdir = join(jobdir,str(mpid))
     # print('workdir: ', workdir)
     lst = os.listdir(workdir) 
-    disps=glob.glob(os.path.join(workdir,"disp-*.abo"))
-    spcells=glob.glob(os.path.join(workdir,"supercell-*.in"))
+    disps=glob.glob(join(workdir,"disp-*.abo"))
+    spcells=glob.glob(join(workdir,"supercell-*.in"))
     score = 0
     for dfile in disps:
         idx = int(dfile[-9:-4])
@@ -71,7 +72,7 @@ def job_in_squeue(screen):
     return xjobs
     
 
-def get_scripts(mpids,subid,nomaddir,jobdir,psdir,ndim,N,n,queue,screen,cluster,njob=1):
+def get_scripts(mpids,subid,nomaddir,jobdir,psdir,ndim,N,n,queue,screen,cluster,njob=1,archive=False):
     for mpid in mpids: 
         mpid = str(mpid)
         m1 = material(mpid,subid,nomaddir,jobdir,psdir)
@@ -79,6 +80,12 @@ def get_scripts(mpids,subid,nomaddir,jobdir,psdir,ndim,N,n,queue,screen,cluster,
         m1.gen_header(ndim,ndim,ndim,cluster)
         m1.run_phono3py()
         m1.gen_job_scripts_multi(N=N,n=n,njob=njob,P=queue,screen=screen, cluster=cluster)
+        if archive: #!
+            jdir = join(jobdir, mpid)
+            arch_dir = join(jdir, 'phono3py')
+            if not os.path.exists(arch_dir):
+                os.makedirs(arch_dir)
+            os.system(f'mv {join(jdir, "supercell-*.in")} {arch_dir}')
 
 def screen_mpids(mpids, maxdisps, maxjobs, skips, jobdir, logs_dir, screen, queue, other_screens=[], all_jobdirs=[]):
     unfinished = True
@@ -143,8 +150,8 @@ def screen_mpids(mpids, maxdisps, maxjobs, skips, jobdir, logs_dir, screen, queu
 
         completions = {}    # show how many disp files are done for each of running mpids in sq.
         for mpid in xjobs:
-            workdir = os.path.join(jobdir,mpid)
-            ddirs=glob.glob(os.path.join(workdir,"disp-*.abo"))
+            workdir = join(jobdir,mpid)
+            ddirs=glob.glob(join(workdir,"disp-*.abo"))
             completions[mpid]=len(ddirs)
             if maxdisps is not None:
                 if not need_action(mpid, jobdir, maxdisps):
@@ -176,8 +183,8 @@ def screen_mpids(mpids, maxdisps, maxjobs, skips, jobdir, logs_dir, screen, queu
                 pass
             else: 
                 mpid = xmpids[0]
-                workdir = os.path.join(jobdir,mpid)
-                sdirs=glob.glob(os.path.join(workdir,"supercell-*.in"))
+                workdir = join(jobdir,mpid)
+                sdirs=glob.glob(join(workdir,"supercell-*.in"))
                 os.chdir(workdir)
             
                 # find from which disp-*.abo to run.
@@ -195,7 +202,7 @@ def screen_mpids(mpids, maxdisps, maxjobs, skips, jobdir, logs_dir, screen, queu
                 idx_to = len(sdirs)
                 print(f'[{mpid}] (from, to) = ', [idx_from, idx_to])
 
-                f = open(os.path.join(workdir,f"run_0.sh"),'r')
+                f = open(join(workdir,f"run_0.sh"),'r')
                 lines = f.readlines()
                 f.close()
                 # for i,lin in enumerate(lines):
@@ -208,7 +215,7 @@ def screen_mpids(mpids, maxdisps, maxjobs, skips, jobdir, logs_dir, screen, queu
                     if '}' in lin:
                         break
                 lines[i]=("for i in {{{0:05d}..{1:05d}}}\n".format(idx_from,idx_to))
-                f = open(os.path.join(workdir,f"run_0.sh"),'w')
+                f = open(join(workdir,f"run_0.sh"),'w')
                 f.writelines(lines)
                 f.close()
                 os.system(f'sbatch run_0.sh')
