@@ -46,6 +46,7 @@ def tdep_next_cell(mpid, dims, temp, max_freq, jobdir, stdep=False):
     idx = count_files(jdir, 'supercell-') + 1
     if stdep:
         pass
+    # TODO: sTDEP
     else:
         tdep_cell(mpid, idx, dims, temp, max_freq, jobdir)
 
