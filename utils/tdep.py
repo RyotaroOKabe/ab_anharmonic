@@ -32,14 +32,6 @@ def tdep_cell(mpid, idx, dims, temp, max_freq, jobdir):
     os.chdir(original_dir)
     print("directory after tdep:", os.getcwd())
 
-    # os.system(f'cd {jdir} | generate_structure --dimensions {nx} {ny} {nz}')
-    # # os.rename(join(jdir,'outfile.ssposcar'), join(jdir,'infile.ssposcar'))
-    # os.system(f'cd {jdir} | cp outfile.ssposcar infile.ssposcar')
-    # print('check0')
-    # os.system(f'cd {jdir} | canonical_configuration --quantum --maximum_frequency {max_freq} --temperature {temp} -n 1 --output_format 2')
-    # print('check1', f'cd {jdir} | canonical_configuration --quantum --maximum_frequency {max_freq} --temperature {temp} -n 1 --output_format 2')
-    # os.system(f'cd {jdir} | cp abinput_conf0001 supercell-{idx:0{5}d}.in')
-    # print('check2', f'cd {jdir} | cp abinput_conf0001 supercell-{idx:0{5}d}.in')
 
 def tdep_next_cell(mpid, dims, temp, max_freq, jobdir, stdep=False):
     jdir = join(jobdir,str(mpid))

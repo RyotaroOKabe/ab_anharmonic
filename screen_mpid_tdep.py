@@ -18,10 +18,10 @@ run_phohno3py=False
 run_tdep_init=True
 jobdir_run = jobdir
 all_jobdirs = [jobdir_run]  #, jobdir2]
-temp = 300
-max_freq = 20
-r_ss = 0.2
-use_stdep=False
+temp = 300  # ttemperature for TDEP
+max_freq = 20   # max frequency for TDEP
+r_ss = 0.2  # ratio of the supercell files got by TDEP wrt phono3py
+use_stdep=False # Use self-consistency i.e. sTDEP? 
 # the mpids which has already run in ryotaro's account. We exclude these from job lists. 
 skips = []
 
