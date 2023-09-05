@@ -20,7 +20,8 @@ jobdir_run = jobdir
 all_jobdirs = [jobdir_run]  #, jobdir2]
 temp = 300
 max_freq = 20
-r_ss = 0.5
+r_ss = 0.2
+use_stdep=False
 # the mpids which has already run in ryotaro's account. We exclude these from job lists. 
 skips = []
 
@@ -39,12 +40,17 @@ print('mpid: ', len(mpids))
 mpids = [mpid for mpid in mpids if int(mpid) not in skips]
 print(mpids)
 print('mpid: ', len(mpids))
+mpids = mpids[:20]
 
+#%%
 if run_phohno3py:
     get_scripts(mpids,subid,nomaddir,jobdir_run,psdir,ndim,N,n,queue,screen=screen,njob=1,cluster=cluster,archive=True)
+
+#%%
 if run_tdep_init:
-    tdep_cells_all(mpids, r_ss, [ndim,ndim,ndim], temp, max_freq, jobdir_run, stdep=False)
-    
-screen_mpids(mpids, maxdisps, maxjobs, skips, jobdir_run, logs_dir, screen, queue, other_screens, all_jobdirs)
+    tdep_cells_all(mpids, r_ss, [ndim,ndim,ndim], temp, max_freq, jobdir_run, stdep=use_stdep)
+
+#%%
+# screen_mpids(mpids, maxdisps, maxjobs, skips, jobdir_run, logs_dir, screen, queue, other_screens, all_jobdirs)
 
 #%%
