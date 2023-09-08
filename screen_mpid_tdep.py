@@ -40,7 +40,7 @@ print('mpid: ', len(mpids))
 mpids = [mpid for mpid in mpids if int(mpid) not in skips]
 print(mpids)
 print('mpid: ', len(mpids))
-mpids = mpids[:20]
+# mpids = mpids[:1]
 
 #%%
 if run_phohno3py:
