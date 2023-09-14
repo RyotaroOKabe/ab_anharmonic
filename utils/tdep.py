@@ -17,14 +17,17 @@ from periodictable import elements
 
 def tdep_cell(mpid, idx, dims, temp, max_freq, jobdir):
     jdir = join(jobdir,str(mpid))
-    nx,ny,nz = dims
     content, check_dict, lattice, frac, cart, znucls, typats = read_uc_abinit(jdir)
     write_uc_vasp(lattice, cart, znucls, typats, jdir)
     original_dir = os.getcwd()
     print("directory before tdep:", os.getcwd())
     os.chdir(jdir)
     print("directory for tdep:", os.getcwd())
-    os.system(f'generate_structure --dimensions {nx} {ny} {nz}')
+    if isinstance(dims, list):
+        nx,ny,nz = dims
+        os.system(f'generate_structure --dimensions {nx} {ny} {nz}')
+    elif isinstance(dims, int):
+        os.system(f'generate_structure -na {dims}')
     os.system(f'cp outfile.ssposcar infile.ssposcar')
     os.system(f'canonical_configuration --quantum --maximum_frequency {max_freq} --temperature {temp} -n 1 --output_format 2')
     os.system(f'cp abinput_conf0001 supercell-{idx:0{5}d}.in')
