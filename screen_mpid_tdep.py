@@ -14,7 +14,7 @@ maxdisps = None	# 3    # stop running job if certain number of disp-*abo are com
 maxjobs = 5    # max number of jobs to submit at one time. 
 screen='_'
 other_screens = ['X']
-run_phohno3py=False
+run_phohno3py=True
 run_tdep_init=True
 jobdir_run = jobdir
 all_jobdirs = [jobdir_run]  #, jobdir2]
@@ -37,7 +37,7 @@ mpids = sorted([int(mpid[:-1]) for mpid in mpids])
 print(mpids)
 print('mpid: ', len(mpids))
 # mpids = sorted([int(mpid) for mpid in mpids if mpid <= get_median(mpids)])  # split the job into half for ryotaro and qcsong account. 
-mpids = [mpid for mpid in mpids if int(mpid) not in skips]
+mpids = [mpid for mpid in mpids if int(mpid) not in skips][:20]
 print(mpids)
 print('mpid: ', len(mpids))
 # mpids = mpids[:1]

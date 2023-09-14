@@ -50,7 +50,8 @@ class material:
 
 		# save positions
 		for j in range(i,i+self.natm):
-			self.pos[j-i,:] = np.array(lines[j].split()[:],dtype=float)
+			# self.pos[j-i,:] = np.array(lines[j].split()[:],dtype=float)
+			self.pos[j-i,:] = np.array([s.replace('d', 'E') for s in lines[j].split()[:]] ,dtype=float)
 
 		# locate the cell section
 		for i,lin in enumerate(lines):

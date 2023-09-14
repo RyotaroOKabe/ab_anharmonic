@@ -3,3 +3,4 @@ jobs/
 jobs_tdep/
 logs
 slurm/
+*.sh

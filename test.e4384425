@@ -1,0 +1,11 @@
+PE-gnu/4.0(44):ERROR:150: Module 'PE-gnu/4.0' conflicts with the currently loaded module(s) 'PE-intel/3.0'
+PE-gnu/4.0(44):ERROR:102: Tcl command execution failed: conflict PE-gnu PE-intel PE-pgi
+
+lapack: This library has not been built for this programming environment. Please load a correct programming environments (PE) (PE-intel).
+hdf5: This library has not been built for this programming environment (PE-intel).
+Traceback (most recent call last):
+  File "/home/ryotaro/phonon/ab_anharmonic/screen_mpid_tdep.py", line 3, in <module>
+    from utils.tdep import *
+  File "/home/ryotaro/phonon/ab_anharmonic/utils/tdep.py", line 14, in <module>
+    from periodictable import elements
+ModuleNotFoundError: No module named 'periodictable'

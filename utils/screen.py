@@ -75,6 +75,7 @@ def job_in_squeue(screen):
 def get_scripts(mpids,subid,nomaddir,jobdir,psdir,ndim,N,n,queue,screen,cluster,njob=1,archive=False):
     for mpid in mpids: 
         mpid = str(mpid)
+        print('mpid: ', mpid)   #!
         m1 = material(mpid,subid,nomaddir,jobdir,psdir)
         m1.get_abinit_vars()
         m1.gen_header(ndim,ndim,ndim,cluster)
