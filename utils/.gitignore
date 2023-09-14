@@ -1,0 +1,7 @@
+dirs.py
+jobs/
+jobs_tdep/
+logs
+slurm/
+*.sh
+__pycache__/
