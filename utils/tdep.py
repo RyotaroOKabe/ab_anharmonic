@@ -29,7 +29,7 @@ def tdep_cell(mpid, idx, dims, temp, max_freq, jobdir):
     os.system(f'canonical_configuration --quantum --maximum_frequency {max_freq} --temperature {temp} -n 1 --output_format 2')
     os.system(f'cp abinput_conf0001 supercell-{idx:0{5}d}.in')
     os.chdir(original_dir)
-    combine_header_abinput(mpid, idx, jobdir)
+    combine_header_abinput(mpid, idx, jobdir)   #!
     print("directory after tdep:", os.getcwd())
 
 

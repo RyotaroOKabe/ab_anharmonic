@@ -9,13 +9,13 @@ njob = 1    # number of parallel jobs
 N=1
 n=32
 cluster='ornl'
-queue='skylake'
+queue='batch'    #'skylake'
 maxdisps = None	# 3    # stop running job if certain number of disp-*abo are completed.
 maxjobs = 5    # max number of jobs to submit at one time. 
 screen='_'
 other_screens = ['X']
 run_phohno3py=True
-run_tdep_init=True
+run_tdep_init=False
 jobdir_run = jobdir
 all_jobdirs = [jobdir_run]  #, jobdir2]
 temp = 300  # ttemperature for TDEP
@@ -37,7 +37,7 @@ mpids = sorted([int(mpid[:-1]) for mpid in mpids])
 print(mpids)
 print('mpid: ', len(mpids))
 # mpids = sorted([int(mpid) for mpid in mpids if mpid <= get_median(mpids)])  # split the job into half for ryotaro and qcsong account. 
-mpids = [mpid for mpid in mpids if int(mpid) not in skips][:20]
+mpids = [mpid for mpid in mpids if int(mpid) not in skips]
 print(mpids)
 print('mpid: ', len(mpids))
 # mpids = mpids[:1]

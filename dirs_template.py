@@ -14,7 +14,8 @@ if not os.path.exists(jobdir):
 if not os.path.exists(logs_dir):
         os.makedirs(logs_dir)
 mpids_files = ['natm2_scf1.txt', 'natm3_scf1.txt', 'natm4_scf1.txt']
-
+cluster='ornl'
+queue='batch'    #'skylake'
 
 
 
