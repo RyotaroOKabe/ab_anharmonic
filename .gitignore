@@ -3,5 +3,6 @@ jobs/
 jobs_tdep/
 logs
 slurm/
+archive/
 *.sh
 __pycache__/
