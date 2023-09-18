@@ -79,6 +79,7 @@ def managing_job(workdir0,jobid,njob):
                     break
                 counts[ pieces[2] ] += 1
 
+            # print(f'check: {counts[jobid+idx2str[j]]}, {unfinish_jobs}')
             if counts[jobid+idx2str[j]] == 0 and not unfinish_jobs:
                 unfinish_list[j] = False
             elif counts[jobid+idx2str[j]] == 0 and unfinish_jobs:

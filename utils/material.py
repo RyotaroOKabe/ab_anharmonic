@@ -274,9 +274,9 @@ class material:
 		f.write("for i in {{{0:05d}..{1:05d}}}\ndo\n".format(1,self.n_disp_tot))
 		f.write("   cat header.in supercell-$i.in >| disp-$i.in;\n")
 		if P=='small':
-			f.write("   abinit disp-$i.in >& log\ndone\n")
+			f.write("   abinit disp-$i.in >& log$i\ndone\n")
 		else:
-			f.write("   ibrun abinit disp-$i.in >& log\ndone\n")
+			f.write("   ibrun abinit disp-$i.in >& log$i\ndone\n")
 		f.close()
 		
 	def gen_job_scripts_multi(self,N,n,njob,P,screen=None,cluster='tacc'):	
@@ -309,10 +309,10 @@ class material:
 				f.write("for i in {{{0:05d}..{1:05d}}}\ndo\n".format(start,end))
 				f.write("   cat header.in supercell-$i.in >| disp-$i.in;\n")
 				if P=='small':
-					f.write("   abinit disp-$i.in >& log;\ndone\n")	#230325 add ';'
+					f.write("   abinit disp-$i.in >& log$i;\ndone\n")	#230325 add ';'
 				else:
 					# f.write(f"   mpirun -x {N*n} abinit disp-$i.in >& log\ndone\n")
-					f.write(f"   ibrun abinit disp-$i.in >& log;\ndone\n")	#230325 add ';'
+					f.write(f"   ibrun abinit disp-$i.in >& log$i;\ndone\n")	#230325 add ';'
 				f.close()
 			elif cluster=='ornl':
 				template = Template(input_template_cades)
@@ -327,7 +327,7 @@ class material:
 				f.write("for i in {{{0:05d}..{1:05d}}}\ndo\n".format(start,end))
 				f.write("   cat header.in supercell-$i.in >| disp-$i.in;\n")
 				#f.write(f"   mpirun -n {n} $MPI_FLAGS $ABINIT disp-$i.in > log 2> err;\ndone\n")	#230325 add ';'
-				f.write(f"   mpirun -n {n} $MPI_FLAGS $ABINIT disp-$i.in >& log;\ndone\n")
+				f.write(f"   mpirun -n {n} $MPI_FLAGS $ABINIT disp-$i.in >& log$i;\ndone\n")
 				f.close()
 
 

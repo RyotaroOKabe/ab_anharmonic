@@ -11,7 +11,7 @@ n=32
 # cluster='ornl'
 # queue='batch'    #'skylake'
 maxdisps = None	# 3    # stop running job if certain number of disp-*abo are completed.
-maxjobs = 9    # max number of jobs to submit at one time. 
+maxjobs = 40    # max number of jobs to submit at one time. 
 screen='_'
 other_screens = ['X']
 run_phohno3py=False
@@ -47,7 +47,6 @@ if run_phohno3py:
     get_scripts(mpids,subid,nomaddir,jobdir_run,psdir,ndim,N,n,queue,screen=screen,njob=1,cluster=cluster,archive=run_tdep_init)
 
 #%%
-mpids = mpids[:20]
 if run_tdep_init:
     tdep_cells_all(mpids, r_ss, [ndim,ndim,ndim], temp, max_freq, jobdir_run, stdep=use_stdep)
 
