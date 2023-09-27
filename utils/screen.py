@@ -167,7 +167,7 @@ def screen_mpids(mpids, maxdisps, maxjobs, skips, jobdir, logs_dir, screen, queu
                         os.system(f"scancel {np.min([job_dict[mpid]])}")
 
             
-        print('job_dict: ', job_dict)
+        # print('job_dict: ', job_dict)
         # keep the record
         now = datetime.now()
         record.append(f'[{now}] {len(mpids_unfinished)} materials remaining. Done: {completions}\n')

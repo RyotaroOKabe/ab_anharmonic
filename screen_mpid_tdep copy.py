@@ -16,7 +16,6 @@ screen='_'
 other_screens = ['X']
 run_phohno3py=False
 run_tdep_init=False
-check_progress= True
 jobdir_run = jobdir2
 all_jobdirs = [jobdir_run]  #, jobdir2]
 temp = 300  # ttemperature for TDEP
@@ -51,26 +50,6 @@ if run_phohno3py:
 if run_tdep_init:
     tdep_cells_all(mpids, r_ss, [ndim,ndim,ndim], temp, max_freq, jobdir_run, stdep=use_stdep)
 
-if check_progress:
-    for mpid in mpids:
-        counts = {'ss_files': 0, 'd_files': 0}
-        jdir = join(jobdir_run, str(mpid))
-        
-        for file in os.listdir(jdir):
-            if os.path.isfile(os.path.join(jdir, file)):
-                if file.startswith('supercell-'):
-                    counts['ss_files'] += 1
-                elif file.startswith('disp-') and file.endswith('abo'):
-                    counts['d_files'] += 1
-        
-        if counts['ss_files']==counts['d_files']:
-            status = '--> done'
-        else: 
-            status = ''
-        print(f'[{mpid}]: completed {counts["d_files"]} / {counts["ss_files"]} {status}')
-
-        
-        
 #%%
 screen_mpids(mpids, maxdisps, maxjobs, skips, jobdir_run, logs_dir, screen, queue, other_screens, all_jobdirs)
 
